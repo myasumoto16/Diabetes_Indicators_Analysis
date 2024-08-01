@@ -7,7 +7,7 @@ dbdata <- read.csv('~/Downloads/diabetes_dataset.csv')
 
 set.seed(123)
 
-trainIndex <- createDataPartition(dbdata$Diabetes_binary, p = 0.9, list = FALSE)
+trainIndex <- createDataPartition(dbdata$Diabetes_binary, p = 0.8, list = FALSE)
 trainData <- dbdata[trainIndex, ]
 testData <- dbdata[-trainIndex, ]
 
