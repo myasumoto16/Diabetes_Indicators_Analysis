@@ -1,11 +1,22 @@
 # Load necessary libraries
 library(rpart)
 library(rpart.plot)
+library(caret) 
 
-dbdata <- read.csv('~/Downloads/diabetes_binary_5050split_health_indicators_BRFSS2015.csv')
+dbdata <- read.csv('~/Downloads/diabetes_dataset.csv')
 
-# Fit the decision tree model
-decision_tree <- rpart(Diabetes_012 ~ ., data = dbdata, method = "class")
+set.seed(123)
 
-# Plot the decision tree
+trainIndex <- createDataPartition(dbdata$Diabetes_binary, p = 0.9, list = FALSE)
+trainData <- dbdata[trainIndex, ]
+testData <- dbdata[-trainIndex, ]
+
+decision_tree <- rpart(Diabetes_binary ~ ., data = trainData, method = "class")
+
+testData$Diabetes_binary <- factor(testData$Diabetes_binary)
+predictions <- factor(predictions, levels = levels(testData$Diabetes_binary))
+
+confusion <- confusionMatrix(predictions, testData$Diabetes_binary)
+print(confusion)
+
 rpart.plot(decision_tree, box.palette = "Blues")
