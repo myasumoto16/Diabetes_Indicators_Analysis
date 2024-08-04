@@ -9,7 +9,7 @@ data <- diabetes_dataset
 # Check the structure of the dataset
 str(data)
 
-# Set a seed for reproducibility
+# Set a seed
 set.seed(123)
 
 # Split the data into training and testing sets
