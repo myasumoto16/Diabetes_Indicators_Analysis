@@ -37,4 +37,14 @@ predictedLabels <- knn(train = trainData_normalized, test = testData_normalized,
 predictedLabels <- factor(predictedLabels, levels = levels(testLabels))
 
 # Evaluate the model
-confusionMatrix(predictedLabels, testLabels)
+confusion <- confusionMatrix(predictedLabels, testLabels)
+
+confusion_df <- as.data.frame(confusion$table)
+
+ggplot(confusion_df, aes(x = Reference, y = Prediction, fill = Freq)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "white", high = "blue") +
+  geom_text(aes(label = Freq), vjust = 1) +
+  theme_minimal() +
+  labs(title = "k-NN Confusion Matrix", x = "Predicted Class", y = "Actual Class")
+
